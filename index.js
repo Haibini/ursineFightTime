@@ -1,11 +1,16 @@
+//var bullets;
+//var bulletTime = 0;
+//var fireButton;
+
 var mainState = {
     preload: function() {
         this.game.load.spritesheet('player', 'assets/man4.png', 88.57, 104.75);
         this.game.load.image('background', 'assets/scenario.jpg');
         this.game.load.image('hp', 'assets/hearts.png');
         this.game.load.image('enemy', 'assets/bear2.png');
-        this.game.load.image('wall', 'assets/wall.PNG');
+//        this.game.load.image('wall', 'assets/wall.PNG');
         this.game.load.image('bullet','assets/bullet.png');
+        this.game.load.image('platform','assets/ground.png');
     },
     
     create: function() {
@@ -26,15 +31,17 @@ var mainState = {
 //        this.bullets.createMultiple(30,'bullet');
 //        this.bullets.setAll('anchor.x', 0.5);
 //        this.bullets.setAll('anchor.y', 1);
-//        this.bullets.setAll('outOfBoundSkill', true);
+//        this.bullets.setAll('outOfBoundsKill', true);
 //        this.bullets.setAll('checkWorldBounds', true);
 //        
-//        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBARD);
+//        this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         
 //        this.player.animations.play("left")
         
+      
+        this.platforms = this.game.add.group();
         this.walls = this.game.add.group();
-        
+//        
         var level = [
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
             'x                                         x',
@@ -69,12 +76,35 @@ var mainState = {
             for (var j = 0; j < level[i].length; j++) {
 
                 if (level[i][j] == 'x') {
-                    var wall = game.add.sprite(20*j, 17.5*i, 'wall');
+                    var wall = game.add.sprite(20.5*j, 18.3*i);
                     this.walls.add(wall);
                     wall.body.immovable = true; 
                 }
             }
         }
+        var platform = game.add.sprite(500,410, 'platform');
+//        this.platform.enableBody = true;
+//        this.platform.create(400,410, 'platform');
+        this.platforms.add(platform);
+        platform.body.immovable = true;
+        
+//        var platform = game.add.sprite(300,410, 'platform');
+////        this.platform.enableBody = true;
+////        this.platform.create(400,410, 'platform');
+//        this.platforms.add(platform);
+//        platform.body.immovable = true;
+//        
+//        var platform = game.add.sprite(400,410, 'platform');
+////        this.platform.enableBody = true;
+////        this.platform.create(400,410, 'platform');
+//        this.platforms.add(platform);
+//        platform.body.immovable = true;
+//        
+//        var platform = game.add.sprite(400,410, 'platform');
+////        this.platform.enableBody = true;
+////        this.platform.create(400,410, 'platform');
+//        this.platforms.add(platform);
+//        platform.body.immovable = true;
         
         this.player.body.gravity.y = 600;
     
@@ -82,6 +112,8 @@ var mainState = {
     
     update: function() {
         this.game.physics.arcade.collide(this.player, this.walls);
+        this.game.physics.arcade.collide(this.player, this.platforms);
+        
 
 //        this.game.physics.arcade.overlap(this.player, this.coins, this.takeCoin, null, this);
 //
@@ -105,14 +137,36 @@ var mainState = {
         
         if(this.cursor.up.isDown && this.player.body.touching.down)
             {
-            this.player.body.velocity.y = -250;
+            this.player.body.velocity.y = -300;
         }
         
         
-//        if(fireButton.isDown){
-//            fireBullet();
+//        if(this.fireButton.isDown){
+//            this.fireBullet();
 //        }
+        
+        
+        
+        
+        
+        
     },
+    
+//    this.fireBullet: function(){
+//    
+//        if(this.game.time.now > bulletTime){
+//    
+//            bullet = this.bullets.getFirstExists(false); 
+//    
+//            if(this.bullet){
+//    this.bullet.reset(player.x,player.y);
+//    this.bullet.body.velocity.y = -400;
+//    this.bulletTime = game.time.now + 200;
+//}
+//}
+//    
+//}
+
     
 //    takeCoin: function(player, coin){
 //        coin.kill();
