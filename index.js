@@ -38,9 +38,33 @@ var bear;
         game.load.spritesheet('bear','assets/bear3trans.png', 83.333, 111);
         game.load.spritesheet('missile','assets/missile.png', 350, 160, 8)
     }
+
+//this.game.time.events.loop(2000, function() {  this.game.add.tween(powerup).to({x: this.game.world.randomX, y: this.game.world.randomY}, 1750, Phaser.Easing.Quadratic.InOut, true);}, this)
+
+var bear;
+var tween;
+
     
    function create() {
 //        this.game.load.image = 'assets/scenario.jpg';
+        bear = game.add.sprite(400, 0, 'bear', 0);
+       
+       this.game.time.events.loop(2500, function() {  
+
+            tween = game.add.tween(bear).to( {x: this.game.world.randomX, y: this.game.world.randomY}, 1500, Phaser.Easing.Quadratic.InOut, true);
+
+            //	There is a 2.5 second delay at the start, then it calls this function
+            tween.onStart.add(onStart, this);
+
+            //	This tween will repeat 10 times, calling this function every time it loops
+            tween.onRepeat.add(onLoop, this);
+
+            //	When it completes it will call this function
+            tween.onComplete.add(onComplete, this);
+       }, this)
+//
+       
+
         background = game.add.tileSprite(0,0,850,470,'background');
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.world.enableBody = true;
@@ -90,49 +114,8 @@ var bear;
         platforms = game.add.group();
         walls = game.add.group();
         player.body.collideWorldBounds = true;
-
-////        
-//        var level = [
-//            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'x                                         x',
-//            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-//        ];
-//        
-//        for (var i = 0; i < level.length; i++) {
-//            for (var j = 0; j < level[i].length; j++) {
-//
-//                if (level[i][j] == 'x') {
-//                    var wall = game.add.sprite(20.5*j, 18.3*i);
-//                    walls.add(wall);
-//                    wall.body.immovable = true; 
-//                }
-//            }
-//        }
-               platforms = game.add.physicsGroup();
+        
+       platforms = game.add.physicsGroup();
 
         var platform = game.add.sprite('platform');
         platform.enableBody = true;
@@ -140,7 +123,7 @@ var bear;
         platforms.create(180,410, 'platform');
         platforms.create(35,350, 'platform');
         platforms.create(355,350, 'platform');
-        platforms.create(698,350, 'platform');
+        platforms.create(530,250, 'platform');
         platforms.add(platform);
         platform.body.immovable = true;
        
@@ -339,4 +322,34 @@ function collisionHandler (bear, bullet) {
 }
 
 function enemyHitsPlayer (player,bullet) {
+    
 }
+
+function onStart() {
+
+	//	Turn off the delay, so it loops seamlessly from here on
+	tween.delay(1000);
+
+}
+
+function onLoop() {
+
+	
+
+	if (bear.frame === 5)
+	{
+		bear.frame = 0;
+	}
+	else
+	{
+		bear.frame++;
+	}
+
+}
+
+function onComplete() {
+
+    tween = game.add.tween(bear).to( { x: 850 - bear.width }, 400, Phaser.Easing.Exponential.Out, true);
+
+}
+
