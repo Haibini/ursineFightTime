@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var game = new Phaser.Game(850, 470, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render });
 
 var player;
@@ -40,6 +41,28 @@ var bear;
     }
     
    function create() {
+=======
+var mainState = {
+    preload: function() {
+        this.game.load.spritesheet('player', 'assets/man4.png', 88.57, 104.75);
+        this.game.load.image('background', 'assets/scenario.jpg');
+        this.game.load.image('hp', 'assets/hearts.png');
+        this.game.load.image('enemy', 'assets/bear2.png');
+        this.game.load.image('wall', 'assets/wall.PNG');
+        this.game.load.image('bullet','assets/bullet.png');
+    },
+    resetLaser: function (laser) {
+	      // Destroy the laser
+	      laser.kill();
+   
+    },
+    create: function() {
+        this.lasers = this.game.add.group();
+        this.lasers.createMultiple(100, 'bullet');
+        this.lasers.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', this.resetLaser);
+        this.lasers.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+        this.lasers.setAll('checkWorldBounds', true);
+>>>>>>> jason
 //        this.game.load.image = 'assets/scenario.jpg';
         background = game.add.tileSprite(0,0,850,470,'background');
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -210,6 +233,7 @@ var bear;
         }
         
         
+<<<<<<< HEAD
         if(fireButton.isDown){
             fireBullet();
         }
@@ -242,6 +266,24 @@ var bear;
 //}
 
     
+=======
+     if(fireButton.isDown){
+          fireBullet();
+     }
+    },
+     fireLaser:function () {
+        // Get the first laser that's inactive, by passing 'false' as a parameter
+        var laser = this.lasers.getFirstExists(false);
+        console.log(laser)
+        if (laser) {
+            // If we have a laser, set it to the starting position
+            laser.reset(this.player.body.x, this.player.body.y - 20);
+            // Give it a velocity of -500 so it starts shooting
+            laser.body.velocity.y = -500;
+
+        }
+     }
+>>>>>>> jason
 //    takeCoin: function(player, coin){
 //        coin.kill();
 //    },
@@ -249,6 +291,7 @@ var bear;
 //    restart: function() {
 //        game.state.start('main');
 //    },
+<<<<<<< HEAD
     function render () {
 //        game.debug.body(player);
 //       
@@ -340,3 +383,8 @@ function collisionHandler (bear, bullet) {
 
 function enemyHitsPlayer (player,bullet) {
 }
+=======
+}
+
+console.log('hi')
+>>>>>>> jason
