@@ -7,8 +7,17 @@ var mainState = {
         this.game.load.image('wall', 'assets/wall.PNG');
         this.game.load.image('bullet','assets/bullet.png');
     },
-    
+    resetLaser: function (laser) {
+	      // Destroy the laser
+	      laser.kill();
+   
+    },
     create: function() {
+        this.lasers = this.game.add.group();
+        this.lasers.createMultiple(100, 'bullet');
+        this.lasers.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', this.resetLaser);
+        this.lasers.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+        this.lasers.setAll('checkWorldBounds', true);
 //        this.game.load.image = 'assets/scenario.jpg';
         this.background = this.game.add.tileSprite(0,0,850,470,'background');
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -109,11 +118,22 @@ var mainState = {
         }
         
         
-//        if(fireButton.isDown){
-//            fireBullet();
-//        }
+     if(fireButton.isDown){
+          fireBullet();
+     }
     },
-    
+     fireLaser:function () {
+        // Get the first laser that's inactive, by passing 'false' as a parameter
+        var laser = this.lasers.getFirstExists(false);
+        console.log(laser)
+        if (laser) {
+            // If we have a laser, set it to the starting position
+            laser.reset(this.player.body.x, this.player.body.y - 20);
+            // Give it a velocity of -500 so it starts shooting
+            laser.body.velocity.y = -500;
+
+        }
+     }
 //    takeCoin: function(player, coin){
 //        coin.kill();
 //    },
@@ -122,3 +142,5 @@ var mainState = {
 //        game.state.start('main');
 //    },
 }
+
+console.log('hi')
