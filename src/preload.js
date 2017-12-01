@@ -5,6 +5,7 @@ preload.prototype = {
         var loadingBar = this.add.sprite(160,240,"loading");
         loadingBar.anchor.setTo(0.5,0.5);
         this.load.setPreloadSprite(loadingBar);
+        
 		this.game.load.image("gametitle","assets/gametitle.png");
 		this.game.load.image("play","assets/play.png");
 		this.game.load.image("higher","assets/higher.png");
@@ -16,11 +17,14 @@ preload.prototype = {
         this.game.load.image('hp', 'assets/hearts.png');
         this.game.load.image('enemy', 'assets/bear2.png');
 //        this.game.load.image('wall', 'assets/wall.PNG');
-        this.game.load.image('bullet','assets/laser.png');
+        this.game.load.image('missile','assets/laser.png');
         this.game.load.image('platform','assets/ground.png');
         this.game.load.spritesheet('bear','assets/bear3trans.png', 83.333, 111);
-        this.game.load.spritesheet('missile','assets/missile.png', 350, 160, 8);
-	},
+        this.game.load.spritesheet('bullet','assets/bullets.gif', 47, 55, 8);
+        
+        //player bullets https://www.spriters-resource.com/custom_edited/mariocustoms/sheet/18057/
+    },
+
   	create: function(){
 		this.game.state.start("GameTitle");
 	}
