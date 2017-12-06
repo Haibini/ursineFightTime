@@ -6,11 +6,11 @@ preload.prototype = {
         loadingBar.anchor.setTo(0.5,0.5);
         this.load.setPreloadSprite(loadingBar);
         
-//	game name image	this.game.load.image("gametitle","assets/gametitle.png");
-		this.game.load.image("play","assets/play.png");
+        this.game.load.image("gametitle","assets/title.png");
+		this.game.load.image("play","assets/play3.png");
 		this.game.load.image("higher","assets/higher.png");
 		this.game.load.image("lower","assets/lower.png");
-		this.game.load.image("gameover","assets/gameover.png");
+		this.game.load.image("gameover","assets/gameover2.jpg");
         
         this.game.load.spritesheet('player', 'assets/man4.png', 88.57, 104.75);
         this.game.load.image('background', 'assets/scenario.jpg');
